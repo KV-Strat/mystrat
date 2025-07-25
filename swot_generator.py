@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 from prompts import strategy_prompt
 import streamlit as st
-from openai import OpenAI
+import openai
 
 load_dotenv()
 openai.api_key = st.secrets["OPENAI_API_KEY"]
