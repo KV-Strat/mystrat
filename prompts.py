@@ -6,9 +6,7 @@ Company: {company}
 Competitors: {competitors}
 Industry: {industry}
 
-Step 1: Generate a SWOT analysis for {company}.
-Step 2: Identify 3 recent developments for {company} and its competitors.
-Step 3: Recommend 3 strategic moves for {company} to differentiate in this market.
+Step 1: Generate a SWOT analysis for {company} in comparison with {competitors}
 
 Respond in markdown format.
 """
