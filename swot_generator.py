@@ -4,7 +4,8 @@ from prompts import strategy_prompt
 from openai import OpenAI
 
 load_dotenv()
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+#client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 def generate_strategy(company, competitors, industry):
     prompt = strategy_prompt(company, competitors, industry)
