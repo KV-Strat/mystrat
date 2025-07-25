@@ -1,0 +1,2 @@
+# mystrat
+My strategy
