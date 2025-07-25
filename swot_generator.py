@@ -6,7 +6,7 @@ from openai import OpenAI
 
 load_dotenv()
 openai.api_key = st.secrets["OPENAI_API_KEY"]
-#client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 
 def generate_strategy(company, competitors, industry):
