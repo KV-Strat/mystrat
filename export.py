@@ -16,7 +16,7 @@ def parse_swot_text(text):
         line = line.strip()
         #line = line.lstrip("* ")
         #line = line.lstrip("# ")
-        line = re.sub(r"^#+\s*", "", line)
+        #line = re.sub(r"^#+\s*", "", line)
         print("line:", line)
 
         lowered = line.lower()
