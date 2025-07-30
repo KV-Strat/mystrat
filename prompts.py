@@ -3,7 +3,7 @@ def strategy_prompt(company, product):
 You are a strategy engine.
 
 Company: {company}
-Product: {Product}
+Product: {product}
 
 Step 1: List its top 5 core capabilities (functional or technical).
 Step 2: Based on those capabilities, identify 5 industries that are best suited to adopt this product.
