@@ -70,23 +70,11 @@ def create_ppt(swot_text, filename="strategy_summary.pptx"):
     left_frame.word_wrap = True
     left_frame.clear()
     run = left_frame.add_paragraph().add_run()
-    run.text = "Strengths"
+    run.text = "Core Capabilities"
     run.font.bold = True
     run.font.size = Pt(20)
     run.font.name = "Calibri"
-    for point in swot["Strengths"]:
-        p = left_frame.add_paragraph()
-        run = p.add_run()
-        run.text = point
-        run.font.size = Pt(12)  # Set font size
-        run.font.name = "Calibri"  # Optional: set font type
-
-    left_frame.add_paragraph().add_run()
-    run.text = "\nWeaknesses"
-    run.font.bold = True
-    run.font.size = Pt(20)
-    run.font.name = "Calibri"
-    for point in swot["Weaknesses"]:
+    for point in swot["Core Capabilities"]:
         p = left_frame.add_paragraph()
         run = p.add_run()
         run.text = point
@@ -97,23 +85,11 @@ def create_ppt(swot_text, filename="strategy_summary.pptx"):
     right_frame.word_wrap = True
     right_frame.clear()
     run= right_frame.add_paragraph().add_run()
-    run.text = "Opportunities"
+    run.text = "Best-Fit Industries"
     run.font.bold = True
     run.font.size = Pt(20)
     run.font.name = "Calibri"
-    for point in swot["Opportunities"]:
-        p = right_frame.add_paragraph()
-        run = p.add_run()
-        run.text = point
-        run.font.size = Pt(12)  # Set font size
-        run.font.name = "Calibri"  # Optional: set font type
-
-    right_frame.add_paragraph().add_run()
-    run.text = "\nThreats"
-    run.font.bold = True
-    run.font.size = Pt(20)
-    run.font.name = "Calibri"
-    for point in swot["Threats"]:
+    for point in swot["Best-Fit Industries"]:
         p = right_frame.add_paragraph()
         run = p.add_run()
         run.text = point
