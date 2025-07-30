@@ -8,7 +8,7 @@ st.subheader("Generate strategic recommendations instantly")
 
 # Input fields
 company = st.text_input("Company name", "Salesforce")
-product = st.text_input("Product", Sales Cloud)
+product = st.text_input("Product", "Sales Cloud")
 
 # Submit button
 if st.button("Generate Strategy"):
