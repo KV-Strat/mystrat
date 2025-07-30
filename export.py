@@ -13,7 +13,7 @@ def parse_swot_text(text):
     buffer = []
 
     for line in text.splitlines():
-        #line = line.strip()
+        line = line.strip()
         #line = line.lstrip("* ")
         #line = line.lstrip("# ")
         #line = re.sub(r"^#+\s*", "", line)
