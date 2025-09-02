@@ -1,8 +1,9 @@
-#Strategy content generation engine for your Streamlit app (Step 1).
+"""
+Strategy content generation engine for your Streamlit app (Step 1).
 
-#- Pluggable LLM provider (OpenAI) with JSON-only prompts
-#- Safe JSON extraction + robust fallbacks (no external calls required)
-#- Consistent schema aligned to session_state in your UX spec
+- Pluggable LLM provider (OpenAI) with JSON-only prompts
+- Safe JSON extraction + robust fallbacks (no external calls required)
+- Consistent schema aligned to session_state in your UX spec
 
 Usage (in Streamlit button handler):
 
