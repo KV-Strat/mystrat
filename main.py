@@ -12,6 +12,10 @@ import uuid
 from datetime import datetime
 
 import streamlit as st
+if "OPENAI_API_KEY" in st.secrets:
+    os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+if "OPENAI_PROJECT" in st.secrets:  # optional
+    os.environ["OPENAI_PROJECT"] = st.secrets["OPENAI_PROJECT"]
 
 try:
     # These come from the generate.py you added in canvas
