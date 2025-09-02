@@ -6,7 +6,7 @@ Streamlit Step‑1 wizard for Strategy Copilot — now wired to generate.py
 """
 
 from __future__ import annotations
-
+from export_ppt import build_ppt_from_state
 import json
 import uuid
 from datetime import datetime
@@ -277,6 +277,17 @@ elif st.session_state.step == 3:
 elif st.session_state.step == 4:
     st.subheader("Export")
     export_type = st.radio("Choose format", ["PowerPoint (coming next)", "JSON"], index=1)
+
+    if export_type == "PowerPoint":
+        bio, fname = build_ppt_from_state(state)
+        st.download_button(
+            "Download PPTX",
+            data=bio.getvalue(),
+            file_name=fname,
+            mime="application/vnd.openxmlformats-officedocument.presentationml.presentation",
+            use_container_width=True,
+        )
+    else:
 
     # Assemble export payload
     payload = {
