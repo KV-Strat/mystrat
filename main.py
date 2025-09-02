@@ -66,20 +66,20 @@ elif st.session_state.step == 1:
 elif st.session_state.step == 2:
        st.subheader("Analysis")
        tabs = st.tabs(state["frameworks"]) if state["frameworks"] else []
-for i, name in enumerate(state["frameworks"]):
-       with tabs[i]:
-              if name == "SWOT":
-                     S = st.tags(label="Strengths", value=state["results"]["SWOT"]["S"]) if hasattr(st, "tags") else st.text_area("Strengths (comma‑sep)")
-                     # NOTE: replace with your preferred editable control(s)
-              elif name == "Ansoff":
-                     st.write("Ansoff 2×2 placeholder — populate cells after generation")
-              else:
-                     st.write(f"{name} placeholder")
-col1, col2 = st.columns([1,1])
-with col1:
-       st.button("Back", on_click=prev_step, use_container_width=True)
-with col2:
-       st.button("Add recommendations", type="primary", on_click=next_step, use_container_width=True)
+       for i, name in enumerate(state["frameworks"]):
+              with tabs[i]:
+                     if name == "SWOT":
+                            S = st.tags(label="Strengths", value=state["results"]["SWOT"]["S"]) if hasattr(st, "tags") else st.text_area("Strengths (comma‑sep)")
+                            # NOTE: replace with your preferred editable control(s)
+                     elif name == "Ansoff":
+                            st.write("Ansoff 2×2 placeholder — populate cells after generation")
+                     else:
+                            st.write(f"{name} placeholder")
+       col1, col2 = st.columns([1,1])
+       with col1:
+              st.button("Back", on_click=prev_step, use_container_width=True)
+       with col2:
+              st.button("Add recommendations", type="primary", on_click=next_step, use_container_width=True)
 
 # -------- step 3: recommendations & what‑if
 elif st.session_state.step == 3:
