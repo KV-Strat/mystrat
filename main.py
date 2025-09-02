@@ -29,7 +29,7 @@ def next_step():
 
 
 def prev_step():
-st.session_state.step = max(0, st.session_state.step - 1)
+       st.session_state.step = max(0, st.session_state.step - 1)
 
 
 st.title("Strategy Copilot")
