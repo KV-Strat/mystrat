@@ -24,7 +24,7 @@ except Exception:  # graceful dev-mode without the module
     StrategyGenerator = None  # type: ignore
     OpenAIProvider = None  # type: ignore
 
-APP_NAME = "Strategy Copilot"
+APP_NAME = "ASK Strategy"
 
 # -------------------- Page & Session Setup --------------------
 st.set_page_config(page_title=APP_NAME, layout="wide")
