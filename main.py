@@ -289,26 +289,26 @@ elif st.session_state.step == 4:
         )
     else:
 
-    # Assemble export payload
-    payload = {
-        "analysis_id": state["analysis_id"],
-        "company": state["company"],
-        "product": state["product"],
-        "geo": state["geo"],
-        "notes": state["notes"],
-        "frameworks": state["frameworks"],
-        "results": state["results"],
-        "recs": state["recs"],
-        "exported_at": datetime.utcnow().isoformat() + "Z",
-    }
-    pretty = json.dumps(payload, indent=2, ensure_ascii=False)
+        # Assemble export payload
+        payload = {
+            "analysis_id": state["analysis_id"],
+            "company": state["company"],
+            "product": state["product"],
+            "geo": state["geo"],
+            "notes": state["notes"],
+            "frameworks": state["frameworks"],
+            "results": state["results"],
+            "recs": state["recs"],
+            "exported_at": datetime.utcnow().isoformat() + "Z",
+        }
+        pretty = json.dumps(payload, indent=2, ensure_ascii=False)
 
-    # Filename pattern
-    safe_company = (state["company"] or "company").replace(" ", "_")
-    safe_product = (state["product"] or "product").replace(" ", "_")
-    fname = f"{safe_company}_{safe_product}_{datetime.now().strftime('%Y%m%d')}_strategy.json"
+        # Filename pattern
+        safe_company = (state["company"] or "company").replace(" ", "_")
+        safe_product = (state["product"] or "product").replace(" ", "_")
+        fname = f"{safe_company}_{safe_product}_{datetime.now().strftime('%Y%m%d')}_strategy.json"
 
-    st.download_button(
+        st.download_button(
         "Download JSON",
         data=pretty.encode("utf-8"),
         file_name=fname,
