@@ -1,7 +1,7 @@
 import streamlit as st
 import uuid
-from swot_generator import generate_strategy
-from export import create_ppt
+#from swot_generator import generate_strategy
+#from export import create_ppt
 
 # App title
 # app.py — single‑file wizard skeleton for Step 1
