@@ -7,22 +7,19 @@ from export import create_ppt
 
 # -------- session state
 if "step" not in st.session_state:
-st.session_state.step = 0
+       st.session_state.step = 0
 if "state" not in st.session_state:
-st.session_state.state = {
-"analysis_id": str(uuid.uuid4()),
-"company": "",
-"product": "",
-"geo": None,
-"notes": None,
-"frameworks": ["SWOT", "Ansoff"],
-"results": {"SWOT": {"S":[],"W":[],"O":[],"T":[]},
-"Ansoff": {"market_penetration":[],"market_development":[],"product_development":[],"diversification":[]}},
-"recs": [],
-"export": {"type": "ppt", "path": None}
-}
-
-
+       st.session_state.state = {
+              "analysis_id": str(uuid.uuid4()),
+              "company": "",
+              "product": "",
+              "geo": None,
+              "notes": None,
+              "frameworks": ["SWOT", "Ansoff"],
+              "results": {"SWOT": {"S":[],"W":[],"O":[],"T":[]},"Ansoff": {"market_penetration":[],"market_development":[],"product_development":[],"diversification":[]}},
+              "recs": [],
+              "export": {"type": "ppt", "path": None}
+        }
 state = st.session_state.state
 
 
