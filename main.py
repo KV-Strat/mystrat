@@ -276,7 +276,7 @@ elif st.session_state.step == 3:
 # Step 4 — Export (JSON stub)
 elif st.session_state.step == 4:
     st.subheader("Export")
-    export_type = st.radio("Choose format", ["PowerPoint (coming next)", "JSON"], index=1)
+    export_type = st.radio("Choose format", ["PowerPoint", "JSON"], index=1)
 
     if export_type == "PowerPoint":
         bio, fname = build_ppt_from_state(state)
