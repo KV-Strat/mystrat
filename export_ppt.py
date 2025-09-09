@@ -16,6 +16,7 @@ This module is defensive: missing sections are skipped gracefully.
 from __future__ import annotations
 from pptx import Presentation
 from pptx.enum.shapes import PP_PLACEHOLDER, MSO_SHAPE
+from pptx.enum.text import PP_ALIGN
 from pptx.util import Inches, Pt
 from typing import Any, Dict, List, Optional
 from pptx.dml.color import RGBColor
@@ -97,6 +98,7 @@ def _add_heading(slide, text: str):
         tf = title_shape.text_frame
         tf.clear()
         p = tf.paragraphs[0]
+        p.alignment = PP_ALIGN.LEFT
         r = p.add_run()
         r.text = text
         return(title_shape)
@@ -105,6 +107,7 @@ def _add_heading(slide, text: str):
     tf = box.text_frame
     tf.clear()
     p = tf.paragraphs[0]
+    p.alignment = PP_ALIGN.LEFT
     run = p.add_run()
     run.text = text
     run.font.size = H2_SIZE
@@ -120,10 +123,15 @@ def _add_bullets(slide, left, top, width, height, items: List[str]):
     tf.clear()
     for i, item in enumerate(items or []):
         p = tf.add_paragraph() if i else tf.paragraphs[0]
+        try:
+            p._element.get_or_add_pPr().get_or_add_buChar()  # force symbol bullets
+        except Exception:
+            pass
         p.level = 0
+        p.space_after = Pt(6)
         r = p.add_run()
         r.text = str(item)
-        r.font.size = BODY_SIZE
+        r.font.size = Pt(BODY_SIZE.pt + 3) if hasattr(BODY_SIZE, "pt") else Pt(BODY_SIZE + 3)
         r.font.color.rgb = COLOR_DARK
     return box
 
@@ -154,11 +162,11 @@ def _add_small_label(slide, text: str, left, top):
 # ---------------------------- Slide builders ----------------------------
 
 def slide_agenda(prs: Presentation, items: Optional[List[str]] = None):
-    blank = next((l for l in prs.slide_layouts if len(l.placeholders) == 0), prs.slide_layouts[0])
-    slide = prs.slides.add_slide(blank)
-    #slide = prs.slides.add_slide(prs.slide_layouts[5])
+    #blank = next((l for l in prs.slide_layouts if len(l.placeholders) == 0), prs.slide_layouts[0])
+    #slide = prs.slides.add_slide(blank)
+    slide = prs.slides.add_slide(prs.slide_layouts[5])
     _add_heading(slide, "Agenda")
-    _add_bullets(slide, MARGIN, Inches(1.2), W - 2*MARGIN, Inches(5.5), items or [
+    _add_bullets(slide, 2*MARGIN, Inches(2.0), W - 4*MARGIN, Inches(5.0), items or [
         "Inputs & Goals",
         "Framework Insights",
         "Recommendations",
