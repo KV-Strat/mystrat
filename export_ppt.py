@@ -92,6 +92,15 @@ def _add_title(prs, title, subtitle=None):
     return slide
 
 def _add_heading(slide, text: str):
+    title_shape = slide.shapes.title
+    if title_shape is not None:
+        tf = title_shape.text_frame
+        tf.clear()
+        p = tf.paragraphs[0]
+        r = p.add_run()
+        r.text = text
+        return(title_shape)
+    # Fallback: make a heading textbox
     box = slide.shapes.add_textbox(MARGIN, MARGIN, W - 2*MARGIN, Inches(0.6))
     tf = box.text_frame
     tf.clear()
@@ -145,7 +154,9 @@ def _add_small_label(slide, text: str, left, top):
 # ---------------------------- Slide builders ----------------------------
 
 def slide_agenda(prs: Presentation, items: Optional[List[str]] = None):
-    slide = prs.slides.add_slide(prs.slide_layouts[5])
+    blank = next((l for l in prs.slide_layouts if len(l.placeholders) == 0), prs.slide_layouts[0])
+    slide = prs.slides.add_slide(blank)
+    #slide = prs.slides.add_slide(prs.slide_layouts[5])
     _add_heading(slide, "Agenda")
     _add_bullets(slide, MARGIN, Inches(1.2), W - 2*MARGIN, Inches(5.5), items or [
         "Inputs & Goals",
@@ -308,7 +319,7 @@ def build_ppt_from_state(state: Dict[str, Any]) -> (BytesIO, str):
 
     # Title
     date_str = datetime.now().strftime("%b %d, %Y")
-    _add_title(prs, f"{company} × {product}", f"Strategy Snapshot — {date_str}")
+    _add_title(prs, f"{product} × {company}", f"Strategy Snapshot — {date_str}")
 
     # Agenda
     slide_agenda(prs)
