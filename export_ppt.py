@@ -18,6 +18,7 @@ from pptx import Presentation
 from pptx.enum.shapes import PP_PLACEHOLDER, MSO_SHAPE
 from pptx.util import Inches
 #from typing import Optional, List
+W, H = Inches(13.333), Inches(7.5)
 
 def add_title(prs, title, subtitle=None):
     # helper: does a layout truly have a title placeholder?
