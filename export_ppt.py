@@ -19,6 +19,8 @@ from pptx.enum.shapes import PP_PLACEHOLDER, MSO_SHAPE
 from pptx.util import Inches, Pt
 from typing import Any, Dict, List, Optional
 from pptx.dml.color import RGBColor
+from io import BytesIO
+from datetime import datetime
 
 W, H = Inches(13.333), Inches(7.5)
 MARGIN = Inches(0.4)
