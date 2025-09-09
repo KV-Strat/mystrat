@@ -16,9 +16,23 @@ This module is defensive: missing sections are skipped gracefully.
 from __future__ import annotations
 from pptx import Presentation
 from pptx.enum.shapes import PP_PLACEHOLDER, MSO_SHAPE
-from pptx.util import Inches
-#from typing import Optional, List
+from pptx.util import Inches, Pt
+from typing import Any, Dict, List, Optional
+from pptx.dml.color import RGBColor
+
 W, H = Inches(13.333), Inches(7.5)
+MARGIN = Inches(0.4)
+TITLE_SIZE = Pt(36)
+SUBTITLE_SIZE = Pt(18)
+H2_SIZE = Pt(24)
+BODY_SIZE = Pt(14)
+MONO_SIZE = Pt(10)
+
+COLOR_PRIMARY = RGBColor(30, 64, 175)    # blue-700
+COLOR_ACCENT  = RGBColor(16, 185, 129)   # emerald-500
+COLOR_DARK    = RGBColor(17, 24, 39)     # gray-900
+COLOR_MED     = RGBColor(75, 85, 99)     # gray-600
+COLOR_LIGHT   = RGBColor(229, 231, 235)  # gray-200
 
 def _add_title(prs, title, subtitle=None):
     # helper: does a layout truly have a title placeholder?
