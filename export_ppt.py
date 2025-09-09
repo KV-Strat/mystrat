@@ -13,81 +13,61 @@ Usage in Streamlit (Export step):
 
 This module is defensive: missing sections are skipped gracefully.
 """
-from __future__ import annotations
+from pptx.enum.shapes import PP_PLACEHOLDER, MSO_SHAPE
+from pptx.util import Inches
 
-from io import BytesIO
-from typing import Any, Dict, List, Optional
-from datetime import datetime
+def add_title(prs, title, subtitle=None):
+    # helper: does a layout truly have a title placeholder?
+    def has_title(layout):
+        for ph in layout.placeholders:
+            pf = getattr(ph, "placeholder_format", None)
+            if pf and pf.type in (PP_PLACEHOLDER.TITLE, PP_PLACEHOLDER.CENTER_TITLE):
+                return True
+        return False
 
-try:
-    from pptx import Presentation
-    from pptx.util import Inches, Pt
-    from pptx.enum.text import PP_ALIGN
-    from pptx.enum.shapes import MSO_SHAPE
-    from pptx.enum.shapes import PP_PLACEHOLDER
-    from pptx.dml.color import RGBColor
-    from pptx.enum.dml import MSO_THEME_COLOR
-    from pptx.chart.data import XyChartData
-    from pptx.enum.chart import XL_CHART_TYPE
-except Exception as e:  # pragma: no cover
-    raise RuntimeError("python-pptx not installed. Run: pip install python-pptx") from e
-
-# ---------------------------- Layout constants ----------------------------
-W, H = Inches(13.333), Inches(7.5)  # 16:9
-MARGIN = Inches(0.4)
-TITLE_SIZE = Pt(36)
-SUBTITLE_SIZE = Pt(18)
-H2_SIZE = Pt(24)
-BODY_SIZE = Pt(14)
-MONO_SIZE = Pt(10)
-
-# Color palette (subtle)
-COLOR_PRIMARY = RGBColor(30, 64, 175)    # blue-700
-COLOR_ACCENT = RGBColor(16, 185, 129)    # emerald-500
-COLOR_DARK = RGBColor(17, 24, 39)        # gray-900
-COLOR_MED = RGBColor(75, 85, 99)         # gray-600
-COLOR_LIGHT = RGBColor(229, 231, 235)    # gray-200
-
-# ---------------------------- Helpers ----------------------------
-
-def _add_title(prs: Presentation, title: str, subtitle: Optional[str] = None):
-def has_title(layout):
-        return any(getattr(ph, "placeholder_format", None) and
-                   ph.placeholder_format.type in (PP_PLACEHOLDER.TITLE, PP_PLACEHOLDER.CENTER_TITLE)
-                   for ph in layout.placeholders)
+    # choose a layout with a real title placeholder (fallback to first)
     layout = next((l for l in prs.slide_layouts if has_title(l)), prs.slide_layouts[0])
     slide = prs.slides.add_slide(layout)
-    slide.shapes.title.text = title
-"""
-    # Title box
-    #left, top, width, height = MARGIN, Inches(1.0), W - 2*MARGIN, Inches(1.2)
-   # title_box = slide.shapes.add_textbox(left, top, width, height)
-    tf = title_box.text_frame
-    tf.clear()
-    p = tf.paragraphs[0]
-    run = p.add_run()
-    run.text = title
-    run.font.size = TITLE_SIZE
-    run.font.bold = True
-    run.font.color.rgb = COLOR_DARK
-"""
 
+    # set title (guard if None)
+    t = slide.shapes.title
+    if t is not None:
+        t.text = title
+        title_top = t.top
+        title_height = t.height
+    else:
+        margin = Inches(0.6)
+        title_top = Inches(0.6)
+        title_height = Inches(1.0)
+        tb = slide.shapes.add_textbox(margin, title_top, prs.slide_width - 2*margin, title_height)
+        tb.text_frame.clear()
+        tb.text_frame.paragraphs[0].add_run().text = title
+
+    # try to use a real SUBTITLE placeholder
+    placed_subtitle = False
     if subtitle:
-        sub_box = slide.shapes.add_textbox(MARGIN, top + Inches(1.1), W - 2*MARGIN, Inches(0.8))
-        stf = sub_box.text_frame
-        stf.clear()
-        p2 = stf.paragraphs[0]
-        r2 = p2.add_run()
-        r2.text = subtitle
-        r2.font.size = SUBTITLE_SIZE
-        r2.font.color.rgb = COLOR_MED
+        for ph in slide.placeholders:
+            pf = getattr(ph, "placeholder_format", None)
+            if pf and pf.type == PP_PLACEHOLDER.SUBTITLE:
+                ph.text = subtitle
+                placed_subtitle = True
+                break
 
-    # Accent bar
-    slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, MARGIN, Inches(0.6), Inches(2.2), Inches(0.15)).fill.solid()
-    slide.shapes[-1].fill.fore_color.rgb = COLOR_PRIMARY
+        if not placed_subtitle:
+            margin = Inches(0.6)
+            top = title_top + title_height + Inches(0.2)
+            sub_box = slide.shapes.add_textbox(margin, top, prs.slide_width - 2*margin, Inches(0.9))
+            stf = sub_box.text_frame
+            stf.clear()
+            p2 = stf.paragraphs[0]
+            r2 = p2.add_run()
+            r2.text = subtitle
 
+    # Accent bar (optional)
+    margin = Inches(0.6)
+    rect = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, margin, Inches(0.6), Inches(2.2), Inches(0.15))
+    # rect.fill.solid(); rect.fill.fore_color.rgb = COLOR_PRIMARY
     return slide
-
 
 def _add_heading(slide, text: str):
     box = slide.shapes.add_textbox(MARGIN, MARGIN, W - 2*MARGIN, Inches(0.6))
