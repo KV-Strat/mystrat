@@ -37,6 +37,7 @@ COLOR_MED     = RGBColor(75, 85, 99)     # gray-600
 COLOR_LIGHT   = RGBColor(229, 231, 235)  # gray-200
 
 def _add_title(prs, title, subtitle=None):
+    st.write(title)
     # helper: does a layout truly have a title placeholder?
     def has_title(layout):
         for ph in layout.placeholders:
