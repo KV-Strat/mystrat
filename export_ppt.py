@@ -13,6 +13,7 @@ Usage in Streamlit (Export step):
 
 This module is defensive: missing sections are skipped gracefully.
 """
+from pptx import Presentation
 from pptx.enum.shapes import PP_PLACEHOLDER, MSO_SHAPE
 from pptx.util import Inches
 from typing import List
