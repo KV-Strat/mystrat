@@ -20,7 +20,7 @@ from pptx.util import Inches
 #from typing import Optional, List
 W, H = Inches(13.333), Inches(7.5)
 
-def add_title(prs, title, subtitle=None):
+def _add_title(prs, title, subtitle=None):
     # helper: does a layout truly have a title placeholder?
     def has_title(layout):
         for ph in layout.placeholders:
