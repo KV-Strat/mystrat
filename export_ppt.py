@@ -24,6 +24,7 @@ try:
     from pptx.util import Inches, Pt
     from pptx.enum.text import PP_ALIGN
     from pptx.enum.shapes import MSO_SHAPE
+    from pptx.enum.shapes import PP_PLACEHOLDER
     from pptx.dml.color import RGBColor
     from pptx.enum.dml import MSO_THEME_COLOR
     from pptx.chart.data import XyChartData
@@ -50,11 +51,17 @@ COLOR_LIGHT = RGBColor(229, 231, 235)    # gray-200
 # ---------------------------- Helpers ----------------------------
 
 def _add_title(prs: Presentation, title: str, subtitle: Optional[str] = None):
-    slide_layout = prs.slide_layouts[5]  # blank
-    slide = prs.slides.add_slide(slide_layout)
+def has_title(layout):
+        return any(getattr(ph, "placeholder_format", None) and
+                   ph.placeholder_format.type in (PP_PLACEHOLDER.TITLE, PP_PLACEHOLDER.CENTER_TITLE)
+                   for ph in layout.placeholders)
+    layout = next((l for l in prs.slide_layouts if has_title(l)), prs.slide_layouts[0])
+    slide = prs.slides.add_slide(layout)
+    slide.shapes.title.text = title
+"""
     # Title box
-    left, top, width, height = MARGIN, Inches(1.0), W - 2*MARGIN, Inches(1.2)
-    title_box = slide.shapes.add_textbox(left, top, width, height)
+    #left, top, width, height = MARGIN, Inches(1.0), W - 2*MARGIN, Inches(1.2)
+   # title_box = slide.shapes.add_textbox(left, top, width, height)
     tf = title_box.text_frame
     tf.clear()
     p = tf.paragraphs[0]
@@ -63,6 +70,7 @@ def _add_title(prs: Presentation, title: str, subtitle: Optional[str] = None):
     run.font.size = TITLE_SIZE
     run.font.bold = True
     run.font.color.rgb = COLOR_DARK
+"""
 
     if subtitle:
         sub_box = slide.shapes.add_textbox(MARGIN, top + Inches(1.1), W - 2*MARGIN, Inches(0.8))
