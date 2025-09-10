@@ -25,7 +25,7 @@ from datetime import datetime
 import streamlit as st
 
 W, H = Inches(13.333), Inches(7.5)
-MARGIN = Inches(0.4)
+MARGIN = Inches(0.8)
 TITLE_SIZE = Pt(36)
 SUBTITLE_SIZE = Pt(18)
 H2_SIZE = Pt(24)
@@ -209,7 +209,7 @@ def slide_agenda(prs: Presentation, items: Optional[List[str]] = None):
     layout = next((l for l in prs.slide_layouts if has_body(l)), prs.slide_layouts[0])
     slide = prs.slides.add_slide(layout)
     _add_heading(slide, "Agenda")
-    _add_bullets(slide, 2*MARGIN, Inches(2.0), W - 4*MARGIN, Inches(5.0), items or [
+    _add_bullets(slide, MARGIN, Inches(2.0), W - 2*MARGIN, Inches(5.0), items or [
         "Inputs & Goals",
         "Framework Insights",
         "Recommendations",
@@ -218,9 +218,10 @@ def slide_agenda(prs: Presentation, items: Optional[List[str]] = None):
     return slide
 
 def slide_exec_snapshot(prs: Presentation, bullets: List[str]):
-    slide = prs.slides.add_slide(prs.slide_layouts[5])
+    layout = next((l for l in prs.slide_layouts if has_body(l)), prs.slide_layouts[0])
+    slide = prs.slides.add_slide(layout)
     _add_heading(slide, "Executive Snapshot")
-    _add_bullets(slide, MARGIN, Inches(1.2), W - 2*MARGIN, Inches(5.5), bullets)
+    _add_bullets(slide, MARGIN, Inches(1.2), W - 2*MARGIN, Inches(5.0), bullets)
     return slide
 
 
