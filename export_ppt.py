@@ -46,6 +46,10 @@ TITLE_TYPES   = _members(["TITLE", "CENTER_TITLE", "VERTICAL_TITLE"])
 BODYISH_TYPES = _members(["BODY", "VERTICAL_BODY", "OBJECT", "TABLE", "CHART", "PICTURE"])
 META_TYPES    = _members(["DATE", "SLIDE_NUMBER", "FOOTER", "HEADER"])
 
+def has_body(layout) -> bool:
+        return any(getattr(ph, "placeholder_format", None) and ph.placeholder_format.type in BODYISH_TYPES
+            for ph in layout.placeholders)
+
 def has_title(layout) -> bool:
     return any(getattr(ph, "placeholder_format", None)
                and ph.placeholder_format.type in TITLE_TYPES
@@ -198,9 +202,6 @@ def _add_small_label(slide, text: str, left, top):
 def slide_agenda(prs: Presentation, items: Optional[List[str]] = None):
     #blank = next((l for l in prs.slide_layouts if len(l.placeholders) == 0), prs.slide_layouts[0])
     #slide = prs.slides.add_slide(blank)
-    def has_body(layout) -> bool:
-        return any(getattr(ph, "placeholder_format", None) and ph.placeholder_format.type in BODYISH_TYPES
-            for ph in layout.placeholders)
     layout = next((l for l in prs.slide_layouts if has_body(l)), prs.slide_layouts[0])
     slide = prs.slides.add_slide(layout)
     _add_heading(slide, "Agenda")
