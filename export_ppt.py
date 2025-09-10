@@ -312,7 +312,7 @@ def slide_recommendations(prs: Presentation, recs: List[Dict[str, Any]]):
     q = _grid(slide, grid_left, grid_top, grid_w, grid_h)
 
     # Quadrant labeling
-    _add_small_label(slide, "Impact ->", grid_left - Inches(1), grid_top - Inches(0.35), angle_deg=270)
+    _add_small_label(slide, "Impact ->", grid_left - Inches(1.1), grid_top + grid_h/2 , angle_deg=270)
     _add_small_label(slide, "Effort ->", grid_left + grid_w - Inches(0.8), grid_top + grid_h + Inches(0.05),angle_deg=0)
 
     # Place recs into quadrants
@@ -335,7 +335,7 @@ def slide_recommendations(prs: Presentation, recs: List[Dict[str, Any]]):
             quad = q[3]
         l, t, w, h = quad
         left   = l + Inches(0.12)
-        top    = t + Inches(0.12)
+        top    = top + t + Inches(0.12)
         width  = w - Inches(0.24)
         height = Inches(0.5)
         tol = Inches(0.05)
