@@ -265,7 +265,7 @@ def slide_ansoff(prs: Presentation, ansoff: Dict[str, List[str]]):
         _add_bullets(slide, l + Inches(0.1), t + Inches(0.45), w - Inches(0.2), h - Inches(0.6), items)
 
     _add_small_label(slide, "Existing Products → New Products", grid_left + grid_w/2 - Inches(1.2), grid_top - Inches(0.35),angle_deg=0)
-    _add_small_label(slide, "New Markets → Existing Markets", grid_left - Inches(0.7), grid_top + grid_h/2 + Inches(0.05),angle_deg=270)
+    _add_small_label(slide, "New Markets → Existing Markets", grid_left - Inches(1.1), grid_top + grid_h/2 + Inches(0.05),angle_deg=270)
     return slide
 
 
@@ -307,13 +307,13 @@ def slide_recommendations(prs: Presentation, recs: List[Dict[str, Any]]):
     slide = prs.slides.add_slide(prs.slide_layouts[5])
     _add_heading(slide, "Top 5 Recommendations — Impact × Effort")
 
-    grid_left, grid_top = MARGIN, Inches(1.4)
+    grid_left, grid_top = MARGIN, Inches(2)
     grid_w, grid_h = W - 2*MARGIN, Inches(4.6)
     q = _grid(slide, grid_left, grid_top, grid_w, grid_h)
 
     # Quadrant labeling
-    _add_small_label(slide, "Impact ↑", grid_left - Inches(0.05), grid_top - Inches(0.35))
-    _add_small_label(slide, "Effort →", grid_left + grid_w - Inches(0.8), grid_top + grid_h + Inches(0.05))
+    _add_small_label(slide, "Impact ->", grid_left - Inches(1), grid_top - Inches(0.35), angle_deg=270)
+    _add_small_label(slide, "Effort ->", grid_left + grid_w - Inches(0.8), grid_top + grid_h + Inches(0.05),angle_deg=0)
 
     # Place recs into quadrants
     for idx, rec in enumerate((recs or [])[:5], start=1):
@@ -334,7 +334,20 @@ def slide_recommendations(prs: Presentation, recs: List[Dict[str, Any]]):
         else:
             quad = q[3]
         l, t, w, h = quad
-        box = prs.slides[-1].shapes.add_textbox(l + Inches(0.12), t + Inches(0.12), w - Inches(0.24), Inches(0.5))
+        left   = l + Inches(0.12)
+        top    = t + Inches(0.12)
+        width  = w - Inches(0.24)
+        height = Inches(0.5)
+        tol = Inches(0.05)
+        gap = Inches(0.10)
+
+        for shp in slide.shapes:
+            # horizontal overlap with our column
+            if (shp.left < left + width) and (shp.left + shp.width > left):
+                if (shp.top - tol) <= top <= (shp.top + shp.height + tol):
+                    top = shp.top + height
+        
+        box = prs.slides[-1].shapes.add_textbox(left + Inches(0.12), top + Inches(0.12), width - Inches(0.24), Inches(0.5))
         tf = box.text_frame; tf.clear(); p = tf.paragraphs[0]
         r = p.add_run(); r.text = f"{idx}. {title}"; r.font.size = BODY_SIZE; r.font.color.rgb = COLOR_DARK
 
