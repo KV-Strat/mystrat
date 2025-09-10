@@ -38,6 +38,28 @@ COLOR_DARK    = RGBColor(17, 24, 39)     # gray-900
 COLOR_MED     = RGBColor(75, 85, 99)     # gray-600
 COLOR_LIGHT   = RGBColor(229, 231, 235)  # gray-200
 
+TITLE_TYPES   = {PP_PLACEHOLDER.TITLE, PP_PLACEHOLDER.CENTER_TITLE, PP_PLACEHOLDER.VERTICAL_TITLE}
+BODYISH_TYPES = {
+    PP_PLACEHOLDER.BODY, PP_PLACEHOLDER.VERTICAL_BODY,
+    PP_PLACEHOLDER.OBJECT, PP_PLACEHOLDER.TABLE, PP_PLACEHOLDER.CHART,
+    PP_PLACEHOLDER.PICTURE, PP_PLACEHOLDER.DIAGRAM, PP_PLACEHOLDER.MEDIA_CLIP,
+}
+META_TYPES    = {PP_PLACEHOLDER.DATE, PP_PLACEHOLDER.SLIDE_NUMBER, PP_PLACEHOLDER.FOOTER, PP_PLACEHOLDER.HEADER}
+
+def has_title(layout) -> bool:
+    return any(getattr(ph, "placeholder_format", None)
+               and ph.placeholder_format.type in TITLE_TYPES
+               for ph in layout.placeholders)
+
+def has_body(layout) -> bool:
+    return any(getattr(ph, "placeholder_format", None)
+               and ph.placeholder_format.type in BODYISH_TYPES
+               for ph in layout.placeholders)
+
+def is_blank(layout) -> bool:
+    types = {ph.placeholder_format.type for ph in layout.placeholders}
+    return len(types) == 0 or types.issubset(META_TYPES)
+
 def _add_title(prs, title, subtitle=None):
     st.write(title)
     # helper: does a layout truly have a title placeholder?
