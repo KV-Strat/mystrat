@@ -341,13 +341,15 @@ def slide_recommendations(prs: Presentation, recs: List[Dict[str, Any]]):
         height = Inches(0.5)
         tol = Inches(0.05)
         gap = Inches(0.10)
-
+        max_bottom=0
         for shp in prs.slides[-1].shapes:
             # horizontal overlap with our column
             if (shp.left < left + width) and (shp.left + shp.width > left):
                 if (shp.top - tol) <= top <= (shp.top + shp.height + tol):
-                    new_top = shp.top + height
-        
+                    btm = shp.top + shp.height
+                    max_bottom = btm if max_bottom is None else max(max_bottom, btm)
+        if max_bottom is not None:
+            new_top = max_bottom + gap
         box = prs.slides[-1].shapes.add_textbox(left, new_top, width, Inches(0.5))
         tf = box.text_frame; tf.clear(); p = tf.paragraphs[0]
         r = p.add_run(); r.text = f"{idx}. {title}"; r.font.size = BODY_SIZE; r.font.color.rgb = COLOR_DARK
