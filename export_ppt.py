@@ -233,7 +233,7 @@ def slide_swot(prs: Presentation, swot: Dict[str, List[str]]):
     box_w = (W - 3*MARGIN) / 2
     box_h = (H - 2*MARGIN - Inches(1.0)) / 2
     x1, x2 = MARGIN, MARGIN + box_w + MARGIN
-    y1, y2 = Inches(2), Inches(2) + box_h + MARGIN
+    y1, y2 = Inches(1), Inches(1) + box_h + MARGIN
 
     def cell(title, items, x, y):
         title_box = slide.shapes.add_textbox(x, y, box_w, Inches(0.35))
@@ -265,7 +265,7 @@ def slide_ansoff(prs: Presentation, ansoff: Dict[str, List[str]]):
         _add_bullets(slide, l + Inches(0.1), t + Inches(0.45), w - Inches(0.2), h - Inches(0.6), items)
 
     _add_small_label(slide, "Existing Products → New Products", grid_left + grid_w/2 - Inches(1.2), grid_top - Inches(0.35),angle_deg=0)
-    _add_small_label(slide, "New Markets → Existing Markets", grid_left - Inches(0.1), grid_top + grid_h/2 + Inches(0.05),angle_deg=90)
+    _add_small_label(slide, "New Markets → Existing Markets", grid_left - Inches(0.2), grid_top + grid_h/2 + Inches(0.05),angle_deg=270)
     return slide
 
 
