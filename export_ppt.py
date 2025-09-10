@@ -16,7 +16,7 @@ This module is defensive: missing sections are skipped gracefully.
 from __future__ import annotations
 from pptx import Presentation
 from pptx.enum.shapes import PP_PLACEHOLDER, MSO_SHAPE
-from pptx.enum.text import PP_ALIGN
+from pptx.enum.text import PP_ALIGN, MSO_ANCHOR
 from pptx.util import Inches, Pt
 from typing import Any, Dict, List, Optional
 from pptx.dml.color import RGBColor
@@ -195,9 +195,11 @@ def _grid(slide, left, top, width, height):
     ]
 
 
-def _add_small_label(slide, text: str, left, top):
+def _add_small_label(slide, text: str, left, top,angle_deg: float = 0):
     b = slide.shapes.add_textbox(left, top, Inches(2), Inches(0.3))
+    b.rotation = angle_deg % 360
     tf = b.text_frame; tf.clear()
+    tf.vertical_anchor = MSO_ANCHOR.MIDDLE  # keep text vertically centered
     p = tf.paragraphs[0]
     r = p.add_run(); r.text = text; r.font.size = Pt(11); r.font.color.rgb = COLOR_MED
 
@@ -262,8 +264,8 @@ def slide_ansoff(prs: Presentation, ansoff: Dict[str, List[str]]):
         tf = title_box.text_frame; tf.clear(); p = tf.paragraphs[0]; r = p.add_run(); r.text = title; r.font.size = Pt(14); r.font.bold = True; r.font.color.rgb = COLOR_PRIMARY
         _add_bullets(slide, l + Inches(0.1), t + Inches(0.45), w - Inches(0.2), h - Inches(0.6), items)
 
-    _add_small_label(slide, "Existing Products → New Products", grid_left + grid_w/2 - Inches(1.2), grid_top - Inches(0.35))
-    _add_small_label(slide, "Existing Markets → New Markets", grid_left - Inches(0.1), grid_top + grid_h/2 + Inches(0.05))
+    _add_small_label(slide, "Existing Products → New Products", grid_left + grid_w/2 - Inches(1.2), grid_top - Inches(0.35),angle_deg=0)
+    _add_small_label(slide, "New Markets → Existing Markets", grid_left - Inches(0.1), grid_top + grid_h/2 + Inches(0.05),angle_deg=90)
     return slide
 
 
