@@ -51,10 +51,7 @@ def has_title(layout) -> bool:
                and ph.placeholder_format.type in TITLE_TYPES
                for ph in layout.placeholders)
 
-def has_body(layout) -> bool:
-    return any(getattr(ph, "placeholder_format", None)
-               and ph.placeholder_format.type in BODYISH_TYPES
-               for ph in layout.placeholders)
+
 
 def is_blank(layout) -> bool:
     types = {ph.placeholder_format.type for ph in layout.placeholders}
@@ -187,11 +184,8 @@ def _add_small_label(slide, text: str, left, top):
 def slide_agenda(prs: Presentation, items: Optional[List[str]] = None):
     #blank = next((l for l in prs.slide_layouts if len(l.placeholders) == 0), prs.slide_layouts[0])
     #slide = prs.slides.add_slide(blank)
-    def has_body(layout):
-        return any(getattr(ph, "placeholder_format", None) and
-            ph.placeholder_format.type in (
-                PP_PLACEHOLDER.BODY, PP_PLACEHOLDER.CONTENT, PP_PLACEHOLDER.VERTICAL_BODY
-            )
+    def has_body(layout) -> bool:
+        return any(getattr(ph, "placeholder_format", None) and ph.placeholder_format.type in BODYISH_TYPES
             for ph in layout.placeholders)
     layout = next((l for l in prs.slide_layouts if has_body(l)), prs.slide_layouts[0])
     slide = prs.slides.add_slide(layout)
