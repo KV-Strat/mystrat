@@ -136,24 +136,38 @@ def _add_heading(slide, text: str):
 
 
 def _add_bullets(slide, left, top, width, height, items: List[str]):
-    box = slide.shapes.add_textbox(left, top, width, height)
-    tf = box.text_frame
-    tf.clear()
+    body = next((ph for ph in slide.placeholders
+                 if getattr(ph, "placeholder_format", None)
+                 and ph.placeholder_format.type in BODYISH), None)
+
+    # Get a text_frame from body if present; otherwise create a textbox
+    if body is not None:
+        used_shape = body
+        tf = body.text_frame
+        force_bullets = False
+    else:
+        used_shape = slide.shapes.add_textbox(left, top, width, height)
+        tf = used_shape.text_frame
+        force_bullets = True  # textboxes often don’t bullet by default
+
     tf.word_wrap = True
+    tf.clear()
+
     for i, item in enumerate(items or []):
-        p = tf.add_paragraph() if i else tf.paragraphs[0]
-        try:
-            p._element.get_or_add_pPr().get_or_add_buChar()  # force symbol bullets
-        except Exception:
-            pass
+        p = tf.paragraphs[0] if i == 0 else tf.add_paragraph()
+        if force_bullets:
+            try:
+                p._element.get_or_add_pPr().get_or_add_buChar()  # force symbol bullets
+            except Exception:
+                pass
         p.level = 0
-        p.font.color.rgb = COLOR_DARK
         p.space_after = Pt(6)
+
         r = p.add_run()
         r.text = str(item)
         r.font.size = Pt(BODY_SIZE.pt + 3) if hasattr(BODY_SIZE, "pt") else Pt(BODY_SIZE + 3)
         r.font.color.rgb = COLOR_DARK
-    return box
+    return used_shape
 
 
 def _grid(slide, left, top, width, height):
