@@ -342,7 +342,7 @@ def slide_recommendations(prs: Presentation, recs: List[Dict[str, Any]]):
         tol = Inches(0.05)
         gap = Inches(0.10)
 
-        for shp in slide.shapes:
+        for shp in slide[-1].shapes:
             # horizontal overlap with our column
             if (shp.left < left + width) and (shp.left + shp.width > left):
                 if (shp.top - tol) <= top <= (shp.top + shp.height + tol):
