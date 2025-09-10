@@ -127,7 +127,8 @@ def _add_bullets(slide, left, top, width, height, items: List[str]):
             p._element.get_or_add_pPr().get_or_add_buChar()  # force symbol bullets
         except Exception:
             pass
-        p.level = 0
+        p.level = 1
+        p.font.color.rgb = COLOR_DARK
         p.space_after = Pt(6)
         r = p.add_run()
         r.text = str(item)
