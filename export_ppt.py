@@ -316,6 +316,7 @@ def slide_recommendations(prs: Presentation, recs: List[Dict[str, Any]]):
     _add_small_label(slide, "Effort ->", grid_left + grid_w - Inches(0.8), grid_top + grid_h + Inches(0.05),angle_deg=0)
 
     # Place recs into quadrants
+    top = 0
     for idx, rec in enumerate((recs or [])[:5], start=1):
         title = rec.get("title", f"Rec {idx}")
         impact = int(rec.get("impact", 3))
