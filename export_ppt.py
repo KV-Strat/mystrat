@@ -46,6 +46,10 @@ TITLE_TYPES   = _members(["TITLE", "CENTER_TITLE", "VERTICAL_TITLE"])
 BODYISH_TYPES = _members(["BODY", "VERTICAL_BODY", "OBJECT", "TABLE", "CHART", "PICTURE"])
 META_TYPES    = _members(["DATE", "SLIDE_NUMBER", "FOOTER", "HEADER"])
 
+BODYISH = {PP_PLACEHOLDER.BODY, PP_PLACEHOLDER.OBJECT}
+if hasattr(PP_PLACEHOLDER, "VERTICAL_BODY"):
+    BODYISH.add(PP_PLACEHOLDER.VERTICAL_BODY)
+
 def has_body(layout) -> bool:
         return any(getattr(ph, "placeholder_format", None) and ph.placeholder_format.type in BODYISH_TYPES
             for ph in layout.placeholders)
