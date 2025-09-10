@@ -119,15 +119,15 @@ def _add_heading(slide, text: str):
 def _add_bullets(slide, left, top, width, height, items: List[str]):
     box = slide.shapes.add_textbox(left, top, width, height)
     tf = box.text_frame
-    tf.word_wrap = True
     tf.clear()
+    tf.word_wrap = True
     for i, item in enumerate(items or []):
         p = tf.add_paragraph() if i else tf.paragraphs[0]
         try:
             p._element.get_or_add_pPr().get_or_add_buChar()  # force symbol bullets
         except Exception:
             pass
-        p.level = 1
+        p.level = 0
         p.font.color.rgb = COLOR_DARK
         p.space_after = Pt(6)
         r = p.add_run()
@@ -165,7 +165,14 @@ def _add_small_label(slide, text: str, left, top):
 def slide_agenda(prs: Presentation, items: Optional[List[str]] = None):
     #blank = next((l for l in prs.slide_layouts if len(l.placeholders) == 0), prs.slide_layouts[0])
     #slide = prs.slides.add_slide(blank)
-    slide = prs.slides.add_slide(prs.slide_layouts[5])
+    def has_body(layout):
+        return any(getattr(ph, "placeholder_format", None) and
+            ph.placeholder_format.type in (
+                PP_PLACEHOLDER.BODY, PP_PLACEHOLDER.CONTENT, PP_PLACEHOLDER.VERTICAL_BODY
+            )
+            for ph in layout.placeholders)
+    layout = next((l for l in prs.slide_layouts if has_body(l)), prs.slide_layouts[0])
+    slide = prs.slides.add_slide(layout)
     _add_heading(slide, "Agenda")
     _add_bullets(slide, 2*MARGIN, Inches(2.0), W - 4*MARGIN, Inches(5.0), items or [
         "Inputs & Goals",
@@ -174,7 +181,6 @@ def slide_agenda(prs: Presentation, items: Optional[List[str]] = None):
         "Next Steps",
     ])
     return slide
-
 
 def slide_exec_snapshot(prs: Presentation, bullets: List[str]):
     slide = prs.slides.add_slide(prs.slide_layouts[5])
