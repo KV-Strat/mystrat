@@ -226,12 +226,13 @@ def slide_exec_snapshot(prs: Presentation, bullets: List[str]):
 
 
 def slide_swot(prs: Presentation, swot: Dict[str, List[str]]):
-    slide = prs.slides.add_slide(prs.slide_layouts[5])
+    layout = next((l for l in prs.slide_layouts if has_body(l)), prs.slide_layouts[0])
+    slide = prs.slides.add_slide(layout)
     _add_heading(slide, "SWOT")
     box_w = (W - 3*MARGIN) / 2
     box_h = (H - 2*MARGIN - Inches(1.0)) / 2
     x1, x2 = MARGIN, MARGIN + box_w + MARGIN
-    y1, y2 = Inches(1.2), Inches(1.2) + box_h + MARGIN
+    y1, y2 = Inches(2), Inches(2) + box_h + MARGIN
 
     def cell(title, items, x, y):
         title_box = slide.shapes.add_textbox(x, y, box_w, Inches(0.35))
