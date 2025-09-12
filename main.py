@@ -118,6 +118,9 @@ def _text_to_list(txt):
 # -------------------- Actions --------------------
 
 def on_generate_click():
+     # Choose provider based on toggle
+    provider = None if state.get("offline_mode") else "openai"
+    
     if not state["company"].strip() or not state["product"].strip():
         st.error("Company and Product are required before generation.")
         return
@@ -157,6 +160,13 @@ if st.session_state.step == 0:
     state["product"] = st.text_input("Product/Line *", state["product"], max_chars=80, placeholder="e.g., Edge IoT Sensors")
     state["geo"] = st.selectbox("Geography (optional)", ["", "US", "EU", "APAC"], index=0)
     state["notes"] = st.text_area("Notes (optional)", value=state["notes"] or "", height=100)
+
+    # Offline test toggle (no OpenAI calls)
+    state["offline_mode"] = st.checkbox(
+        "Run without OpenAI (offline mock)",
+        value=state.get("offline_mode", True),
+        help="Use a local mock generator so you can test without API keys/costs."
+    )
 
     col1, col2 = st.columns(2)
     with col1:
