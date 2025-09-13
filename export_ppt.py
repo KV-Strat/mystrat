@@ -317,7 +317,7 @@ def slide_recommendations(prs: Presentation, recs: List[Dict[str, Any]]):
 
     # Place recs into quadrants
     #top = 0
-    for idx, rec in enumerate((recs or [])[:5], start=1):
+    for idx, rec in enumerate((recs or [])[:10], start=1):
         title = rec.get("title", f"Rec {idx}")
         impact = int(rec.get("impact", 3))
         effort = int(rec.get("effort", 3))
@@ -344,9 +344,9 @@ def slide_recommendations(prs: Presentation, recs: List[Dict[str, Any]]):
         max_bottom=0
         for shp in prs.slides[-1].shapes:
             # horizontal overlap with our column
-            if (shp.left == left) and (shp.top == top):
+            if (left == shp.left) and (top == shp.top):
                 top = shp.top + height
-        box = prs.slides[-1].shapes.add_textbox(left, top, width, Inches(0.5))
+        box = prs.slides[-1].shapes.add_textbox(left, top, width, height)
         tf = box.text_frame; tf.clear(); p = tf.paragraphs[0]
         r = p.add_run(); r.text = f"{idx}. {title}"; r.font.size = BODY_SIZE; r.font.color.rgb = COLOR_DARK
 
