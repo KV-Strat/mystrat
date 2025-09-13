@@ -86,6 +86,7 @@ def _get_generator() -> "StrategyGenerator":
                 return [
                     {"title": "OEM bundle program", "impact": 5, "effort": 3, "rationale": "Derived from analysis."},
                     {"title": "Managed calibration add‑on", "impact": 4, "effort": 3, "rationale": "Derived from analysis."},
+                    {"title": "Managed calibration add‑on 12", "impact": 1, "effort": 2, "rationale": "Derived from analysis."}
                 ]
 
         return _MockGen()  # type: ignore
@@ -119,7 +120,8 @@ def _text_to_list(txt):
 
 def on_generate_click():
      # Choose provider based on toggle
-    provider = None if state.get("offline_mode") else "openai"
+    provider = None 
+    if state.get("offline_mode") else "openai"
     
     if not state["company"].strip() or not state["product"].strip():
         st.error("Company and Product are required before generation.")
