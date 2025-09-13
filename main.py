@@ -86,14 +86,14 @@ def _get_generator() -> "StrategyGenerator":
                 return [
                     {"title": "OEM bundle program - Q0", "impact": 5, "effort": 3, "rationale": "Derived from analysis."},
                     {"title": "Managed calibration add‑on - Q0", "impact": 4, "effort": 2, "rationale": "Derived from analysis."},
-                    {"title": "Managed calibration add‑on 12 - Q1", "impact": 5, "effort": 4, "rationale": "Derived from analysis."}
-                    {"title": "Managed calibration add‑on 12 - Q1", "impact": 6, "effort": 5, "rationale": "Derived from analysis."}
-                    {"title": "Managed calibration add‑on 12" - Q2, "impact": 3, "effort": 2, "rationale": "Derived from analysis."}
-                    {"title": "Managed calibration add‑on 12 - Q2", "impact": 1, "effort": 3, "rationale": "Derived from analysis."}
-                    {"title": "Managed calibration add‑on 12 - Q4", "impact": 1, "effort": 4, "rationale": "Derived from analysis."}
-                    {"title": "Managed calibration add‑on 12 - Q4", "impact": 3, "effort": 6, "rationale": "Derived from analysis."}
-                    {"title": "Managed calibration add‑on 12 - Q1", "impact": 5, "effort": 4, "rationale": "Derived from analysis."}
-                    {"title": "Managed calibration add‑on 12 - Q2", "impact": 3, "effort": 2, "rationale": "Derived from analysis."}
+                    {"title": "Managed calibration add‑on - Q1", "impact": 5, "effort": 4, "rationale": "Derived from analysis."}
+                    {"title": "Managed calibration add‑on - Q1", "impact": 6, "effort": 5, "rationale": "Derived from analysis."}
+                    {"title": "Managed calibration add‑on - Q2", "impact": 3, "effort": 2, "rationale": "Derived from analysis."}
+                    {"title": "Managed calibration add‑on - Q2", "impact": 1, "effort": 3, "rationale": "Derived from analysis."}
+                    {"title": "Managed calibration add‑on - Q4", "impact": 1, "effort": 4, "rationale": "Derived from analysis."}
+                    {"title": "Managed calibration add‑on - Q4", "impact": 3, "effort": 6, "rationale": "Derived from analysis."}
+                    {"title": "Managed calibration add‑on - Q1", "impact": 5, "effort": 4, "rationale": "Derived from analysis."}
+                    {"title": "Managed calibration add‑on - Q2", "impact": 3, "effort": 2, "rationale": "Derived from analysis."}
                 ]
 
         return _MockGen()  # type: ignore
