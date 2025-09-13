@@ -345,7 +345,7 @@ def slide_recommendations(prs: Presentation, recs: List[Dict[str, Any]]):
         for shp in prs.slides[-1].shapes:
             st.write(title, "left:", left, "shape left:", shp.left, "top:", top, "shape top:", shp.top)
             # horizontal overlap with our column
-            if abs(left - shp.left) <= 0.05 and abs(top - shp.top) <= 0.05:
+            if abs(left - shp.left) <= 1 and abs(top - shp.top) <= 1:
                 top = shp.top + height
                 st.write(title, "left:", left, "shape left:", shp.left, "new top:", top, "shape top:", shp.top)
         box = prs.slides[-1].shapes.add_textbox(left, top, width, height)
