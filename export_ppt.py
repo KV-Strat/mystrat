@@ -344,8 +344,8 @@ def slide_recommendations(prs: Presentation, recs: List[Dict[str, Any]]):
         max_bottom=0
         for shp in prs.slides[-1].shapes:
             # horizontal overlap with our column
-            if (shp.left = left) and (shp.top = top):
-                top = top + height
+            if (shp.left == left) and (shp.top == top):
+                top = shp.top + height
         box = prs.slides[-1].shapes.add_textbox(left, top, width, Inches(0.5))
         tf = box.text_frame; tf.clear(); p = tf.paragraphs[0]
         r = p.add_run(); r.text = f"{idx}. {title}"; r.font.size = BODY_SIZE; r.font.color.rgb = COLOR_DARK
