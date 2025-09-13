@@ -22,6 +22,7 @@ from typing import Any, Dict, List, Optional
 from pptx.dml.color import RGBColor
 from io import BytesIO
 from datetime import datetime
+import numpy as np
 import streamlit as st
 
 W, H = Inches(13.333), Inches(7.5)
@@ -341,10 +342,9 @@ def slide_recommendations(prs: Presentation, recs: List[Dict[str, Any]]):
         height = Inches(0.5)
         tol = Inches(0.05)
         gap = Inches(0.10)
-        max_bottom=0
         for shp in prs.slides[-1].shapes:
             # horizontal overlap with our column
-            if (left == shp.left) and (top == shp.top):
+            if (abs(left - shp.left) <= 0.05 and (abs(top - shp.top) <=0.05):
                 top = shp.top + height
         box = prs.slides[-1].shapes.add_textbox(left, top, width, height)
         tf = box.text_frame; tf.clear(); p = tf.paragraphs[0]
