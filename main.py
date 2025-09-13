@@ -120,8 +120,7 @@ def _text_to_list(txt):
 
 def on_generate_click():
      # Choose provider based on toggle
-    provider = None 
-    if state.get("offline_mode") else "openai"
+    provider = None if state.get("offline_mode") else "openai"
     
     if not state["company"].strip() or not state["product"].strip():
         st.error("Company and Product are required before generation.")
