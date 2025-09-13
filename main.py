@@ -84,9 +84,16 @@ def _get_generator() -> "StrategyGenerator":
 
             def generate_recommendations(self, results, **kwargs):
                 return [
-                    {"title": "OEM bundle program", "impact": 5, "effort": 3, "rationale": "Derived from analysis."},
-                    {"title": "Managed calibration add‑on", "impact": 4, "effort": 3, "rationale": "Derived from analysis."},
-                    {"title": "Managed calibration add‑on 12", "impact": 1, "effort": 2, "rationale": "Derived from analysis."}
+                    {"title": "OEM bundle program - Q0", "impact": 5, "effort": 3, "rationale": "Derived from analysis."},
+                    {"title": "Managed calibration add‑on - Q0", "impact": 4, "effort": 2, "rationale": "Derived from analysis."},
+                    {"title": "Managed calibration add‑on 12 - Q1", "impact": 5, "effort": 4, "rationale": "Derived from analysis."}
+                    {"title": "Managed calibration add‑on 12 - Q1", "impact": 6, "effort": 5, "rationale": "Derived from analysis."}
+                    {"title": "Managed calibration add‑on 12" - Q2, "impact": 3, "effort": 2, "rationale": "Derived from analysis."}
+                    {"title": "Managed calibration add‑on 12 - Q2", "impact": 1, "effort": 3, "rationale": "Derived from analysis."}
+                    {"title": "Managed calibration add‑on 12 - Q4", "impact": 1, "effort": 4, "rationale": "Derived from analysis."}
+                    {"title": "Managed calibration add‑on 12 - Q4", "impact": 3, "effort": 6, "rationale": "Derived from analysis."}
+                    {"title": "Managed calibration add‑on 12 - Q1", "impact": 5, "effort": 4, "rationale": "Derived from analysis."}
+                    {"title": "Managed calibration add‑on 12 - Q2", "impact": 3, "effort": 2, "rationale": "Derived from analysis."}
                 ]
 
         return _MockGen()  # type: ignore
