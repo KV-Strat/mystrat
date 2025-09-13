@@ -312,7 +312,7 @@ def slide_recommendations(prs: Presentation, recs: List[Dict[str, Any]]):
     q = _grid(slide, grid_left, grid_top, grid_w, grid_h)
 
     # Quadrant labeling
-    _add_small_label(slide, "Impact ->", grid_left - Inches(1.1), grid_top + grid_h , angle_deg=270)
+    _add_small_label(slide, "Impact ->", grid_left - Inches(1.1), grid_top + grid_h - Inches(1.0), angle_deg=270)
     _add_small_label(slide, "Effort ->", grid_left + grid_w - Inches(0.8), grid_top + grid_h + Inches(0.05),angle_deg=0)
 
     # Place recs into quadrants
