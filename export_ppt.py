@@ -347,6 +347,7 @@ def slide_recommendations(prs: Presentation, recs: List[Dict[str, Any]]):
             # horizontal overlap with our column
             if abs(left - shp.left) <= 0.05 and abs(top - shp.top) <= 0.05:
                 top = shp.top + height
+                st.write(title, "left:", left, "shape left:", shp.left, "new top:", top, "shape top:", shp.top)
         box = prs.slides[-1].shapes.add_textbox(left, top, width, height)
         tf = box.text_frame; tf.clear(); p = tf.paragraphs[0]
         r = p.add_run(); r.text = f"{idx}. {title}"; r.font.size = BODY_SIZE; r.font.color.rgb = COLOR_DARK
